@@ -57,9 +57,8 @@ public class CourseEntity implements Serializable {
     @Column(name = "deleted_at")
     private Date deletedAt;
 
-    @Column(name = "teacher_id", nullable = false, length = 2)
     @NotNull
     @NotBlank
     @ManyToOne
-    private TeacherEntity teacher_id;
+    private TeacherEntity teacherId;
 }

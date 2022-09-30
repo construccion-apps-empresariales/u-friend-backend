@@ -42,7 +42,6 @@ public class SessionEntity implements Serializable {
     @NotBlank
     private Boolean isLoggedIn;
 
-    @Column(name = "user_id", nullable = false)
     @NotNull
     @NotBlank
     @ManyToOne

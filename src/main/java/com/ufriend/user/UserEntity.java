@@ -69,24 +69,21 @@ public class UserEntity {
     @Column(name = "deleted_at")
     private Date deletedAt;
 
-    @Column(name = "role_id", nullable = false, length = 2)
     @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the role code.")
     @NotNull
     @NotBlank
     @OneToOne
-    private RoleEntity role_id;
+    private RoleEntity roleId;
 
-    @Column(name = "language_id", nullable = false, length = 2)
     @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the language code.")
     @NotNull
     @NotBlank
     @OneToMany
     private List<LanguageEntity> languageId;
 
-    @Column(name = "theme_id", nullable = false, length = 2)
     @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the role code.")
     @NotNull
     @NotBlank
     @OneToMany
-    private List<ThemeEntity> theme_id;
+    private List<ThemeEntity> themeId;
 }

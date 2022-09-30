@@ -53,19 +53,16 @@ public class NoteEntity implements Serializable {
     @Column(name = "deleted_at")
     private Date deletedAt;
 
-    @Column(name = "user_id", nullable = false)
     @NotNull
     @NotBlank
     @ManyToOne
     private UserEntity userId;
 
-    @Column(name = "course_id", nullable = false)
     @NotNull
     @NotBlank
     @ManyToOne
     private CourseEntity courseId;
 
-    @Column(name = "father_id")
     @OneToOne
     private NoteEntity fatherId;
 }
