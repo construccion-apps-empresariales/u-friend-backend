@@ -1,11 +1,13 @@
 package com.ufriend;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+@Slf4j
 @SpringBootApplication
 public class UFriendApplication implements CommandLineRunner {
 
@@ -26,7 +28,7 @@ public class UFriendApplication implements CommandLineRunner {
 
 		int rows = jdbcTemplate.update(sql);
 		if (rows > 0) {
-			System.out.println("A new row has been inserted.");
+			log.info("A new row has been inserted.");
 		}
 	}
 }
