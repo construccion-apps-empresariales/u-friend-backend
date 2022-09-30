@@ -1,10 +1,10 @@
-# Driving My Notes
+# U-Friend
 
 ## Description
 
-Driving my goals is a projetc intended to every type of student who want to have real tranking of the notes.
+U-Friend is a projetc intended to every type of student who want to have real tranking of the notes.
 
-This repository is going to have only the backend part of the code, to see the frontend refer to [Driving My Notes Frontend](https://github.com/construccion-apps-empresariales/pf-frontend)
+This repository is going to have only the backend part of the code, to see the frontend refer to [U-Friend](https://github.com/construccion-apps-empresariales/u-friend-frontend)
 
 ## Technologies
 
