@@ -63,6 +63,6 @@ public class NoteEntity implements Serializable {
     @ManyToOne
     private CourseEntity courseId;
 
-    @OneToOne
+    @ManyToOne
     private NoteEntity fatherId;
 }

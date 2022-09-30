@@ -72,18 +72,18 @@ public class UserEntity {
     @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the role code.")
     @NotNull
     @NotBlank
-    @OneToOne
+    @ManyToOne
     private RoleEntity roleId;
 
     @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the language code.")
     @NotNull
     @NotBlank
-    @OneToMany
-    private List<LanguageEntity> languageId;
+    @ManyToOne
+    private LanguageEntity languageId;
 
     @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the role code.")
     @NotNull
     @NotBlank
-    @OneToMany
-    private List<ThemeEntity> themeId;
+    @ManyToOne
+    private ThemeEntity themeId;
 }
