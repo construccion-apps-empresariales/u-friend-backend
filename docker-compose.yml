@@ -1,0 +1,22 @@
+version: "3"
+
+volumes:
+  ufriend_db:
+
+networks:
+  back:
+
+services:
+  database:
+    image: postgres:14.5-alpine
+    container_name: ufriend_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=ufriend_password
+      - POSTGRES_USER=ufriend
+      - POSTGRES_DB=ufriend
+    volumes:
+      - ufriend_db:/var/lib/postgresql/data
+    networks:
+      - back
