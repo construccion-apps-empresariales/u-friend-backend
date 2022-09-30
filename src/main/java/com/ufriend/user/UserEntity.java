@@ -1,18 +1,17 @@
-package com.ufriend.entities;
+package com.ufriend.user;
 
 import java.sql.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.ufriend.language.LanguageEntity;
+import com.ufriend.role.RoleEntity;
+import com.ufriend.theme.ThemeEntity;
 import lombok.Data;
 
 @Entity
@@ -55,22 +54,39 @@ public class UserEntity {
 
     @Column(name = "phone", length = 50)
     @Size(min = 1, max = 150)
-    @NotNull
-    @NotBlank
     private String phone;
 
-    @Column(name = "confirmated", columnDefinition = "BOOLEAN DEFAULT false")
-    private Boolean confirmated;
+    @Column(name = "confirmed", columnDefinition = "BOOLEAN DEFAULT false")
+    private Boolean confirmed;
 
-    // TODO rol, language, theme
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    Date created_at;
+    private Date createdAt;
 
     @Column(name = "updated_at")
-    Date updated_at;
+    private Date updatedAt;
 
     @Column(name = "deleted_at")
-    Date deleted_at;
+    private Date deletedAt;
 
+    @Column(name = "role_id", nullable = false, length = 2)
+    @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the role code.")
+    @NotNull
+    @NotBlank
+    @OneToOne
+    private RoleEntity role_id;
+
+    @Column(name = "language_id", nullable = false, length = 2)
+    @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the language code.")
+    @NotNull
+    @NotBlank
+    @OneToMany
+    private List<LanguageEntity> languageId;
+
+    @Column(name = "theme_id", nullable = false, length = 2)
+    @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the role code.")
+    @NotNull
+    @NotBlank
+    @OneToMany
+    private List<ThemeEntity> theme_id;
 }

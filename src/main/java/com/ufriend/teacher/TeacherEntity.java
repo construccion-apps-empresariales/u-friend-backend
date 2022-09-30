@@ -1,5 +1,6 @@
-package com.ufriend.entities;
+package com.ufriend.teacher;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -18,7 +19,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "teachers")
-public class TeacherEntity {
+public class TeacherEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
@@ -31,10 +32,8 @@ public class TeacherEntity {
     @NotBlank
     private String name;
 
-    @Column(name = "lastname", nullable = false, length = 100)
+    @Column(name = "lastname", length = 100)
     @Size(min = 1, max = 100)
-    @NotNull
-    @NotBlank
     private String lastname;
 
     @Column(name = "email", unique = true, nullable = false, length = 150)
@@ -46,17 +45,15 @@ public class TeacherEntity {
 
     @Column(name = "phone", length = 50)
     @Size(min = 1, max = 150)
-    @NotNull
-    @NotBlank
     private String phone;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    Date created_at;
+    private Date createdAt;
 
     @Column(name = "updated_at")
-    Date updated_at;
+    private Date updatedAt;
 
     @Column(name = "deleted_at")
-    Date deleted_at;
+    private Date deletedAt;
 
 }

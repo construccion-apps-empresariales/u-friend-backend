@@ -1,23 +1,20 @@
-package com.ufriend.entities;
+package com.ufriend.course;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.ufriend.teacher.TeacherEntity;
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "courses")
-public class CourseEntity {
+public class CourseEntity implements Serializable {
     
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
@@ -29,8 +26,6 @@ public class CourseEntity {
     @NotNull
     @NotBlank
     private String name;
-
-    // TODO teaher
 
     @Column(name = "approve_note", nullable = false, columnDefinition = "REAL DEFAULT 3.0")
     @NotNull
@@ -48,18 +43,23 @@ public class CourseEntity {
     private float maxNote;
 
     @Column(name = "starts", nullable = false)
-    Date starts;
+    private Date starts;
 
     @Column(name = "ends", nullable = false)
-    Date ends;
+    private Date ends;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    Date created_at;
+    private Date createdAt;
 
     @Column(name = "updated_at")
-    Date updated_at;
+    private Date updatedAt;
 
     @Column(name = "deleted_at")
-    Date deleted_at;
+    private Date deletedAt;
 
+    @Column(name = "teacher_id", nullable = false, length = 2)
+    @NotNull
+    @NotBlank
+    @ManyToOne
+    private TeacherEntity teacher_id;
 }

@@ -1,5 +1,6 @@
-package com.ufriend.entities;
+package com.ufriend.role;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -14,34 +15,27 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "languajes")
-public class LanguajeEntity {
+@Table(name = "roles")
+public class RoleEntity implements Serializable {
     
     @Id
     @Column(name = "id", nullable = false, length = 2)
-    @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the languaje code.")
-    @NotNull
-    @NotBlank
+    @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the role code.")
     private String id;
 
-    @Column(name = "name", nullable = false, length = 50)
-    @Size(min = 1, max = 50)
+    @Column(name = "name", nullable = false, length = 20)
+    @Size(min = 1, max = 20)
     @NotNull
     @NotBlank
     private String name;
 
-    @Column(name = "dictionary", columnDefinition = "TEXT")
-    @NotNull
-    @NotBlank
-    private String dictionary;
-
     @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    Date created_at;
+    private Date createdAt;
 
     @Column(name = "updated_at")
-    Date updated_at;
+    private Date updatedAt;
 
     @Column(name = "deleted_at")
-    Date deleted_at;
+    private Date deletedAt;
 
 }
