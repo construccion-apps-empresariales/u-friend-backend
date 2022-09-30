@@ -8,6 +8,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String index(){
-        return "U-Friend Backend, we are working on it!";
+        return "U-Friend Backend, we are working on it!_";
     }
 }
