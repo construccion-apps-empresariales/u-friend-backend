@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
@@ -27,9 +28,8 @@ public class TeacherEntity implements Serializable {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
-    @Size(min = 1, max = 100)
+    @Length(min = 1, max = 100)
     @NotNull
-    @NotBlank
     private String name;
 
     @Column(name = "lastname", length = 100)
@@ -37,9 +37,8 @@ public class TeacherEntity implements Serializable {
     private String lastname;
 
     @Column(name = "email", unique = true, nullable = false, length = 150)
-    @Size(min = 1, max = 150)
+    @Length(min = 1, max = 150)
     @NotNull
-    @NotBlank
     @Email
     private String email;
 
@@ -47,7 +46,7 @@ public class TeacherEntity implements Serializable {
     @Size(min = 1, max = 150)
     private String phone;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
     private Date createdAt;
 
     @Column(name = "updated_at")

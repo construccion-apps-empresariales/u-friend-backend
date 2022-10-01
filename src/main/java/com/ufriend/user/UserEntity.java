@@ -13,6 +13,7 @@ import com.ufriend.language.LanguageEntity;
 import com.ufriend.role.RoleEntity;
 import com.ufriend.theme.ThemeEntity;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
@@ -24,43 +25,36 @@ public class UserEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 100)
-    @Size(min = 1, max = 100)
-    @NotNull
-    @NotBlank
+    @Column(name = "name", length = 100)
+    @Length(min = 1, max = 100)
     private String name;
 
-    @Column(name = "lastname", nullable = false, length = 100)
-    @Size(min = 1, max = 100)
-    @NotNull
-    @NotBlank
+    @Column(name = "lastname", length = 100)
+    @Length(min = 1, max = 100)
     private String lastname;
 
     @Column(name = "photo")
     private String photo;
 
     @Column(name = "email", nullable = false, length = 150)
-    @Size(min = 1, max = 150)
+    @Length(min = 1, max = 150)
     @NotNull
-    @NotBlank
     @Email
     private String email;
 
     @Column(name = "password", nullable = false)
-    @Size(min = 6, max = 255)
+    @Length(min = 6, max = 255)
     @NotNull
-    @NotBlank
     private String password;
 
     @Column(name = "phone", length = 50)
-    @Size(min = 1, max = 150)
+    @Length(min = 1, max = 150)
     private String phone;
 
     @Column(name = "confirmed", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean confirmed;
 
-
-    @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
     private Date createdAt;
 
     @Column(name = "updated_at")
@@ -69,21 +63,15 @@ public class UserEntity {
     @Column(name = "deleted_at")
     private Date deletedAt;
 
-    @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the role code.")
     @NotNull
-    @NotBlank
     @ManyToOne
     private RoleEntity roleId;
 
-    @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the language code.")
     @NotNull
-    @NotBlank
     @ManyToOne
     private LanguageEntity languageId;
 
-    @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the role code.")
     @NotNull
-    @NotBlank
     @ManyToOne
     private ThemeEntity themeId;
 }

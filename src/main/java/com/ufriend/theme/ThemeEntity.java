@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
@@ -20,16 +21,15 @@ public class ThemeEntity implements Serializable {
     
     @Id
     @Column(name = "id", nullable = false, length = 2)
-    @Size(max = 2, min = 2, message = "The id length must be equals to 2, indicating the theme code.")
+    @Length(max = 2, min = 2, message = "The id length must be equals to 2, indicating the theme code.")
     private String id;
 
     @Column(name = "name", nullable = false, length = 50)
-    @Size(min = 1, max = 50)
+    @Length(min = 1, max = 50)
     @NotNull
-    @NotBlank
     private String name;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
     private Date createdAt;
 
     @Column(name = "updated_at")

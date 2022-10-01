@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 import com.ufriend.course.CourseEntity;
 import com.ufriend.user.UserEntity;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
@@ -23,19 +24,16 @@ public class NoteEntity implements Serializable {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
-    @Size(min = 1, max = 100)
+    @Length(min = 1, max = 100)
     @NotNull
-    @NotBlank
     private String name;
 
     @Column(name = "percentage", nullable = false)
     @NotNull
-    @NotBlank
     private float percentage;
     
     @Column(name = "value")
     @NotNull
-    @NotBlank
     private float value;
 
     @Column(name = "starts", nullable = false)
@@ -44,7 +42,7 @@ public class NoteEntity implements Serializable {
     @Column(name = "ends", nullable = false)
     private Date ends;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
     private Date createdAt;
 
     @Column(name = "updated_at")
@@ -54,12 +52,10 @@ public class NoteEntity implements Serializable {
     private Date deletedAt;
 
     @NotNull
-    @NotBlank
     @ManyToOne
     private UserEntity userId;
 
     @NotNull
-    @NotBlank
     @ManyToOne
     private CourseEntity courseId;
 
