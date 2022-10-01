@@ -1,7 +1,7 @@
 package com.ufriend.note;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -37,19 +37,19 @@ public class NoteEntity implements Serializable {
     private float value;
 
     @Column(name = "starts", nullable = false)
-    private Date starts;
+    private LocalDateTime starts;
 
     @Column(name = "ends", nullable = false)
-    private Date ends;
+    private LocalDateTime ends;
 
     @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    private Date createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
 
     @NotNull
     @ManyToOne

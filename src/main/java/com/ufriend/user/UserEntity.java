@@ -1,13 +1,10 @@
 package com.ufriend.user;
 
-import java.sql.Date;
-import java.util.List;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.ufriend.language.LanguageEntity;
 import com.ufriend.role.RoleEntity;
@@ -55,13 +52,13 @@ public class UserEntity {
     private Boolean confirmed;
 
     @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    private Date createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
 
     @NotNull
     @ManyToOne

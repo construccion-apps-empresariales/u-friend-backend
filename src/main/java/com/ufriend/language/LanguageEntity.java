@@ -1,7 +1,7 @@
 package com.ufriend.language;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,12 +34,12 @@ public class LanguageEntity implements Serializable {
     private String dictionary;
 
     @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    private Date createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
 
 }
