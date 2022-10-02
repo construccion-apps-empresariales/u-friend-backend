@@ -51,7 +51,7 @@ public class UserEntity {
     @Column(name = "confirmed", columnDefinition = "BOOLEAN DEFAULT false")
     private Boolean confirmed;
 
-    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
@@ -62,13 +62,13 @@ public class UserEntity {
 
     @NotNull
     @ManyToOne
-    private RoleEntity roleId;
+    private RoleEntity role;
 
     @NotNull
     @ManyToOne
-    private LanguageEntity languageId;
+    private LanguageEntity language;
 
     @NotNull
     @ManyToOne
-    private ThemeEntity themeId;
+    private ThemeEntity theme;
 }

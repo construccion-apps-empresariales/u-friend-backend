@@ -39,13 +39,13 @@ public class CourseEntity implements Serializable {
     @NotNull
     private float maxNote = 5;
 
-    @Column(name = "starts", nullable = false)
+    @Column(name = "starts")
     private LocalDateTime starts;
 
-    @Column(name = "ends", nullable = false)
+    @Column(name = "ends")
     private LocalDateTime ends;
 
-    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
@@ -54,7 +54,6 @@ public class CourseEntity implements Serializable {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @NotNull
     @ManyToOne
-    private TeacherEntity teacherId;
+    private TeacherEntity teacher;
 }

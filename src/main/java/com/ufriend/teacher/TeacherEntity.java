@@ -33,6 +33,7 @@ public class TeacherEntity implements Serializable {
 
     @Column(name = "lastname", length = 100)
     @Size(min = 1, max = 100)
+    @NotNull
     private String lastname;
 
     @Column(name = "email", unique = true, nullable = false, length = 150)
@@ -42,10 +43,10 @@ public class TeacherEntity implements Serializable {
     private String email;
 
     @Column(name = "phone", length = 50)
-    @Size(min = 1, max = 150)
+    @Size(min = 1, max = 50)
     private String phone;
 
-    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")

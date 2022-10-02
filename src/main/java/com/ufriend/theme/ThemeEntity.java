@@ -22,12 +22,12 @@ public class ThemeEntity implements Serializable {
     @Length(max = 2, min = 2, message = "The id length must be equals to 2, indicating the theme code.")
     private String id;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", unique = true, nullable = false, length = 50)
     @Length(min = 1, max = 50)
     @NotNull
     private String name;
 
-    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")

@@ -33,16 +33,15 @@ public class NoteEntity implements Serializable {
     private float percentage;
     
     @Column(name = "value")
-    @NotNull
     private float value;
 
-    @Column(name = "starts", nullable = false)
+    @Column(name = "starts")
     private LocalDateTime starts;
 
-    @Column(name = "ends", nullable = false)
+    @Column(name = "ends")
     private LocalDateTime ends;
 
-    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
@@ -53,12 +52,12 @@ public class NoteEntity implements Serializable {
 
     @NotNull
     @ManyToOne
-    private UserEntity userId;
+    private UserEntity user;
 
     @NotNull
     @ManyToOne
-    private CourseEntity courseId;
+    private CourseEntity course;
 
     @ManyToOne
-    private NoteEntity fatherId;
+    private NoteEntity father;
 }

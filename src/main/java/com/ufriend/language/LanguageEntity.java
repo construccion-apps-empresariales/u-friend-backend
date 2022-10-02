@@ -33,7 +33,7 @@ public class LanguageEntity implements Serializable {
     @Column(name = "dictionary", columnDefinition = "TEXT")
     private String dictionary;
 
-    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")

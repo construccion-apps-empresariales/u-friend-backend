@@ -36,15 +36,15 @@ public class SessionEntity implements Serializable {
     @NotNull
     private String refreshToken;
 
-    @Column(name = "is_logged_in", nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    @Column(name = "is_logged_in", nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     @NotNull
-    private Boolean isLoggedIn;
+    private Boolean isLoggedIn = true;
 
     @NotNull
     @ManyToOne
     private UserEntity user;
 
-    @Column(name = "created_at", columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
