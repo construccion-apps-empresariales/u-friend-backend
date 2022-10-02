@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class TokenHandle {
 
-    @Value("${u-frind.token.secret}")
+    @Value("${u-friend.token.secret}")
     private String secret;
 
     public String getAccessToken(String username, String role) {

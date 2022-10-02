@@ -10,3 +10,5 @@ services:
         - DB_URL=${DB_URL}
         - DB_USERNAME=${DB_USERNAME}
         - DB_PASSWORD=${DB_PASSWORD}
+        - FRONT_CLIENT=${FRONT_CLIENT}
+        - SECRET=${SECRET}
