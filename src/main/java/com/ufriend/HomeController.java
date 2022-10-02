@@ -6,11 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 
-    @GetMapping("/")
-    public String index(){
-        return "U-Friend index";
-    }
-
     @GetMapping("/home")
     public String home(){
         return "U-Friend Home";

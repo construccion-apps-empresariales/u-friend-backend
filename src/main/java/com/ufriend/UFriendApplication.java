@@ -88,16 +88,17 @@ public class UFriendApplication {
 	}
 
 	private void createUsers(){
-		UserEntity adminUser = userService.findById(1l);
+		UserEntity adminUser = userService.findById(1L);
 		if (adminUser == null){
 			adminUser = new UserEntity();
-			adminUser.setEmail("admin@ufriend.com");
-			adminUser.setPassword("Asdf1234$");
-			adminUser.setConfirmed(true);
-			adminUser.setRoleId(roleService.findById("01"));
-			adminUser.setThemeId(themeService.findById("01"));
-			adminUser.setLanguageId(languageService.findById("EN"));
 		}
+		adminUser.setEmail("admin@ufriend.com");
+		adminUser.setPassword("Asdf1234$");
+		adminUser.setName("ADMIN");
+		adminUser.setConfirmed(true);
+		adminUser.setRole(roleService.findById("01"));
+		adminUser.setTheme(themeService.findById("01"));
+		adminUser.setLanguage(languageService.findById("EN"));
 		userService.save(adminUser);
 	}
 }

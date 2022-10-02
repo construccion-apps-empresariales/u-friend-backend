@@ -11,6 +11,7 @@ import com.ufriend.role.RoleEntity;
 import com.ufriend.theme.ThemeEntity;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Data
@@ -71,4 +72,13 @@ public class UserEntity {
     @NotNull
     @ManyToOne
     private ThemeEntity theme;
+
+    private String encodePassword(String password){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(password);
+    }
+
+    public void setPassword(String password) {
+        this.password = encodePassword(password);
+    }
 }
