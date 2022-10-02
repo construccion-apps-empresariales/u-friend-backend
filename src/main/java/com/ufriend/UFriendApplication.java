@@ -51,12 +51,12 @@ public class UFriendApplication {
 		roleService.save(adminRole);
 
 		RoleEntity userRole = roleService.findById("02");
-			if (userRole == null){
+		if (userRole == null){
 			userRole = new RoleEntity();
-			userRole.setId("01");
-			userRole.setName("ADMIN");
+			userRole.setId("02");
+			userRole.setName("USER");
 		}
-			roleService.save(userRole);
+		roleService.save(userRole);
 	}
 
 	private void createThemes(){
