@@ -1,7 +1,7 @@
 package com.ufriend.course;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 
 import com.ufriend.teacher.TeacherEntity;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
@@ -22,43 +23,37 @@ public class CourseEntity implements Serializable {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 200)
-    @Size(min = 1, max = 200)
+    @Length(min = 1, max = 200)
     @NotNull
-    @NotBlank
     private String name;
 
     @Column(name = "approve_note", nullable = false, columnDefinition = "REAL DEFAULT 3.0")
     @NotNull
-    @NotBlank
-    private float approveNote;
+    private float approveNote = 3;
 
     @Column(name = "min_note", nullable = false, columnDefinition = "REAL DEFAULT 0.0")
     @NotNull
-    @NotBlank
-    private float minNote;
+    private float minNote = 0;
 
     @Column(name = "max_note", nullable = false, columnDefinition = "REAL DEFAULT 5.0")
     @NotNull
-    @NotBlank
-    private float maxNote;
+    private float maxNote = 5;
 
-    @Column(name = "starts", nullable = false)
-    private Date starts;
+    @Column(name = "starts")
+    private LocalDateTime starts;
 
-    @Column(name = "ends", nullable = false)
-    private Date ends;
+    @Column(name = "ends")
+    private LocalDateTime ends;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    private Date createdAt;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
 
-    @NotNull
-    @NotBlank
     @ManyToOne
-    private TeacherEntity teacherId;
+    private TeacherEntity teacher;
 }

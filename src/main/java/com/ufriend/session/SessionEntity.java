@@ -1,7 +1,7 @@
 package com.ufriend.session;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +12,7 @@ import com.ufriend.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
@@ -26,33 +27,29 @@ public class SessionEntity implements Serializable {
     private Long id;
 
     @Column(name = "token", nullable = false)
-    @Size(min = 1, max = 255)
+    @Length(min = 1, max = 255)
     @NotNull
-    @NotBlank
     private String token;
 
     @Column(name = "refresh_token", nullable = false)
-    @Size(min = 1, max = 255)
+    @Length(min = 1, max = 255)
     @NotNull
-    @NotBlank
     private String refreshToken;
 
-    @Column(name = "is_logged_in", nullable = false, columnDefinition = "BOOLEAN DEFAULT false")
+    @Column(name = "is_logged_in", nullable = false, columnDefinition = "BOOLEAN DEFAULT true")
     @NotNull
-    @NotBlank
-    private Boolean isLoggedIn;
+    private Boolean isLoggedIn = true;
 
     @NotNull
-    @NotBlank
     @ManyToOne
     private UserEntity user;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    private Date createdAt;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
 }

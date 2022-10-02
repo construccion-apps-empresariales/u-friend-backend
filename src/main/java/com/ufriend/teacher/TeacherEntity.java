@@ -1,7 +1,7 @@
 package com.ufriend.teacher;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,11 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
@@ -27,33 +27,32 @@ public class TeacherEntity implements Serializable {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
-    @Size(min = 1, max = 100)
+    @Length(min = 1, max = 100)
     @NotNull
-    @NotBlank
     private String name;
 
     @Column(name = "lastname", length = 100)
     @Size(min = 1, max = 100)
+    @NotNull
     private String lastname;
 
     @Column(name = "email", unique = true, nullable = false, length = 150)
-    @Size(min = 1, max = 150)
+    @Length(min = 1, max = 150)
     @NotNull
-    @NotBlank
     @Email
     private String email;
 
     @Column(name = "phone", length = 50)
-    @Size(min = 1, max = 150)
+    @Size(min = 1, max = 50)
     private String phone;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    private Date createdAt;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
 
 }

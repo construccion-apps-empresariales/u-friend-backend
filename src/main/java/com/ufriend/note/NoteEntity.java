@@ -1,7 +1,7 @@
 package com.ufriend.note;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 import com.ufriend.course.CourseEntity;
 import com.ufriend.user.UserEntity;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
@@ -23,46 +24,40 @@ public class NoteEntity implements Serializable {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
-    @Size(min = 1, max = 100)
+    @Length(min = 1, max = 100)
     @NotNull
-    @NotBlank
     private String name;
 
     @Column(name = "percentage", nullable = false)
     @NotNull
-    @NotBlank
     private float percentage;
     
     @Column(name = "value")
-    @NotNull
-    @NotBlank
     private float value;
 
-    @Column(name = "starts", nullable = false)
-    private Date starts;
+    @Column(name = "starts")
+    private LocalDateTime starts;
 
-    @Column(name = "ends", nullable = false)
-    private Date ends;
+    @Column(name = "ends")
+    private LocalDateTime ends;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "DATE DEFAULT CURRENT_DATE")
-    private Date createdAt;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
 
     @NotNull
-    @NotBlank
     @ManyToOne
-    private UserEntity userId;
+    private UserEntity user;
 
     @NotNull
-    @NotBlank
     @ManyToOne
-    private CourseEntity courseId;
+    private CourseEntity course;
 
     @ManyToOne
-    private NoteEntity fatherId;
+    private NoteEntity father;
 }
