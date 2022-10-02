@@ -1,7 +1,14 @@
 package com.ufriend.user;
 
+import com.ufriend.language.LanguageService;
+import com.ufriend.role.RoleDao;
+import com.ufriend.role.RoleService;
+import com.ufriend.theme.ThemeDao;
+import com.ufriend.theme.ThemeService;
 import com.ufriend.user.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +20,15 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private RoleDao roleDao;
+
+    @Autowired
+    private ThemeService themeService;
+
+    @Autowired
+    private LanguageService languageService;
 
     @Override
     @Transactional(readOnly = true)
@@ -26,12 +42,18 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void save(UserEntity role) {
-        userDao.save(role);
+    public void save(UserEntity user) {
+        if (user.getRole() == null)
+            user.setRole(roleDao.findByName("USER"));
+        if (user.getTheme() == null)
+            user.setTheme(themeService.findById("01"));
+        if (user.getLanguage() == null)
+            user.setLanguage(languageService.findById("EN"));
+        userDao.save(user);
     }
 
     @Override
-    public void delete(UserEntity role) {
-        userDao.delete(role);
+    public void delete(UserEntity user) {
+        userDao.delete(user);
     }
 }

@@ -1,10 +1,15 @@
 package com.ufriend.controllers;
 
+import com.ufriend.config.auth.TokenHandle;
+import com.ufriend.dto.GenericOutDTO;
 import com.ufriend.dto.LoginDTO;
+import com.ufriend.dto.RegisterInDTO;
 import com.ufriend.dto.TokenDTO;
+import com.ufriend.role.RoleDao;
 import com.ufriend.role.RoleEntity;
 import com.ufriend.user.UserDao;
 import com.ufriend.user.UserEntity;
+import com.ufriend.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import io.jsonwebtoken.Jwts;
@@ -25,7 +31,36 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class authController {
 
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleDao roleDao;
+
+    @Autowired
+    private TokenHandle tokenHandle;
+
+    @PostMapping("/register")
+    public ResponseEntity<GenericOutDTO> register(@RequestBody RegisterInDTO registerInDTO){
+        GenericOutDTO genericOutDTO = new GenericOutDTO();
+        if (!registerInDTO.getPassword().equals(registerInDTO.getConfirmPassword())){
+            genericOutDTO.setErrorMessage("Password and Confirm Password does not match");
+            return ResponseEntity.badRequest().body(genericOutDTO);
+        }
+        UserEntity user = userDao.findByEmail(registerInDTO.getEmail());
+        if (user != null){
+            genericOutDTO.setErrorMessage("Email already taken");
+            return ResponseEntity.badRequest().body(genericOutDTO);
+        }
+        user = new UserEntity();
+        user.setEmail(registerInDTO.getEmail());
+        user.setPassword(registerInDTO.getPassword());
+        userService.save(user);
+        genericOutDTO.setSuccessMessage("User registered!");
+        return ResponseEntity.ok(genericOutDTO);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
@@ -35,8 +70,8 @@ public class authController {
         }
         RoleEntity role = user.getRole();
         TokenDTO tokenDTO = new TokenDTO();
-        tokenDTO.setAccessToken(getAccessToken(user.getName(), role.getName()));
-        tokenDTO.setRefreshToken(getRefreshToken(user.getName(), role.getName()));
+        tokenDTO.setAccessToken(tokenHandle.getAccessToken(user.getName(), role.getName()));
+        tokenDTO.setRefreshToken(tokenHandle.getRefreshToken(user.getName(), role.getName()));
         return ResponseEntity.ok(tokenDTO);
     }
 
@@ -45,35 +80,5 @@ public class authController {
         return ResponseEntity.ok("Session closed");
     }
 
-    private String getAccessToken(String username, String role) {
-        String secretKey = "my-super-secret-key";
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-                .commaSeparatedStringToAuthorityList(role);
-        String token = Jwts
-                .builder()
-                .setId("U-Friend")
-                .setSubject(username)
-                .claim("authorities",
-                        grantedAuthorities.stream()
-                                .map(GrantedAuthority::getAuthority)
-                                .collect(Collectors.toList()))
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
-                .signWith(SignatureAlgorithm.HS512,
-                        secretKey.getBytes()).compact();
-        return "Bearer " + token;
-    }
 
-    private String getRefreshToken(String username, String role) {
-        String secretKey = "my-super-secret-key";
-        String token = Jwts
-                .builder()
-                .setId("U-Friend")
-                .setSubject(username)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30))
-                .signWith(SignatureAlgorithm.HS512,
-                        secretKey.getBytes()).compact();
-        return "Bearer " + token;
-    }
 }
