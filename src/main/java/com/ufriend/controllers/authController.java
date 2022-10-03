@@ -63,5 +63,4 @@ public class authController {
         return ResponseEntity.ok("Session closed");
     }
 
-
 }

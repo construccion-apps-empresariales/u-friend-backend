@@ -17,9 +17,6 @@ import java.util.stream.Collectors;
 @Service
 public class TokenHandle {
 
-    private final String HEADER = "Authorization";
-    private final String PREFIX = "Bearer ";
-
     @Value("${u-friend.token.secret}")
     private String secret;
 
@@ -55,16 +52,4 @@ public class TokenHandle {
         return "Bearer " + token;
     }
 
-    public Claims validateToken(HttpServletRequest request) {
-        String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
-        String SECRET = secret;
-        return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
-    }
-
-    public boolean JWTExists(HttpServletRequest request, HttpServletResponse res) {
-        String authenticationHeader = request.getHeader(HEADER);
-        if (authenticationHeader == null || !authenticationHeader.startsWith(PREFIX))
-            return false;
-        return true;
-    }
 }
