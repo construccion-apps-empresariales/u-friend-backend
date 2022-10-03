@@ -5,27 +5,13 @@ import com.ufriend.dto.GenericOutDTO;
 import com.ufriend.dto.LoginDTO;
 import com.ufriend.dto.RegisterInDTO;
 import com.ufriend.dto.TokenDTO;
-import com.ufriend.role.RoleDao;
 import com.ufriend.role.RoleEntity;
 import com.ufriend.user.UserDao;
 import com.ufriend.user.UserEntity;
 import com.ufriend.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class authController {
@@ -35,9 +21,6 @@ public class authController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private RoleDao roleDao;
 
     @Autowired
     private TokenHandle tokenHandle;
