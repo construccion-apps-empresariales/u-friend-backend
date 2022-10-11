@@ -2,13 +2,8 @@ package com.ufriend.user;
 
 import com.ufriend.language.LanguageService;
 import com.ufriend.role.RoleDao;
-import com.ufriend.role.RoleService;
-import com.ufriend.theme.ThemeDao;
 import com.ufriend.theme.ThemeService;
-import com.ufriend.user.UserEntity;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

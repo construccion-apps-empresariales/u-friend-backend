@@ -1,6 +1,5 @@
 package com.ufriend.role;
 
-import javax.management.relation.Role;
 import java.util.List;
 
 public interface IRoleService {
