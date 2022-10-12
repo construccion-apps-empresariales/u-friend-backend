@@ -1,6 +1,5 @@
 package com.ufriend.language;
 
-import com.ufriend.language.LanguageEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
