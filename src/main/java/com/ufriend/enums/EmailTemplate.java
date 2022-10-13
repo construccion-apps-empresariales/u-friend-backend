@@ -6,13 +6,24 @@ import java.io.FileReader;
 
 public enum EmailTemplate {
     
-    CONFIRMATION(getHtmlFile("confirmation")),
-    ACCOUNT_DELETED(getHtmlFile("account_deleted")),
-    RESTORE_PASSWORD(getHtmlFile("restore_password"));
+    CONFIRMATION(
+        "Confirmación de correo",
+        getHtmlFile("confirmation") 
+    ),
+    ACCOUNT_DELETED(
+        "Cuenta eliminada",
+        getHtmlFile("account_deleted")
+    ),
+    RESTORE_PASSWORD(
+        "Restauración de contraseña",
+        getHtmlFile("restore_password")
+    );
 
     private String content;
+    private String subject;
 
-    private EmailTemplate (String content) {
+    private EmailTemplate (String subject, String content) {
+        this.subject = subject;
         this.content = content;
     }
 
@@ -34,6 +45,10 @@ public enum EmailTemplate {
 
     public String getContent() {
         return this.content;
+    }
+
+    public String getSubject() {
+        return this.subject;
     }
 
 }
