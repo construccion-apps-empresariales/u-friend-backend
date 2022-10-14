@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email de confirmación</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Varela Round', sans-serif;
+            color: black;
+        }
+
+        .card {
+            position: relative;
+            display: block;
+            margin: auto;
+            background-color: rgb(245, 245, 245);
+            width: 80%;
+            border-radius: 10px;
+            padding: 2rem;
+        }
+
+        .logo {
+            display: block;
+            margin: auto;
+            width: 5rem;
+        }
+
+        .greeting {
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 2rem;
+        }
+        
+        .body {
+            text-align: justify;
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+        }
+
+        .buttons {
+            justify-content: center;
+            width: fit-content;
+            margin: auto;
+            margin-bottom: 3rem;
+        }
+
+        .confirm {
+            background-color: #04CBBD;
+            padding: 0.5rem;
+        }
+
+        .cancel {
+            background-color: #FF787B;
+            padding: 0.5rem 0.8rem;
+        }
+
+        button {
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            margin: 0px 1rem;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .footer {
+            text-align: center;
+        }
+
+        .text {
+            color: black;
+        }
+
+        @media screen and (max-width: 435px) {
+            html{
+                font-size: 14px;
+            }
+            button {
+                margin: 0px 0px;
+            }
+        }
+
+    </style>
+</head>
+    <body>
+        <div class="card">
+           <img class="logo" src="https://i.ibb.co/sjkY8Rk/logo.png" alt="logo">
+
+            <p class="greeting">
+                &#33;Hola!
+            </p>
+
+            <p class="body">
+                Gracias por registrarte en <a href="HOST"><span style="color: #8032F5;">U-Friend</span></a>.<br>Para completar tu registro, por favor confirma tu correo electr&#243;nico
+                presionando en el bot&#243;n <b><a href="HOST/confirm-email/TOKEN" style="color:#04CBBD;">Confirmar</a></b>. Si no has realizado el registro o deseas cancelarlo, presiona el bot&#243;n <b>
+                <a style="color: #FF787B;" href="HOST/cancel-registration/TOKEN">Cancelar</a></b>.
+            </p>
+
+            <div class="buttons">
+                <button class="confirm"><a href="HOST/confirm-email/TOKEN"><span style="color:black;">Confirmar</span></a></button>
+                <button class="cancel"><a href="HOST/cancel-registration/TOKEN"><span style="color:black;">Cancelar</span></a></button>
+            </div>
+
+            <p class="footer">
+                &#169 Todos los derechos reservados para <a href="HOST"><span style="color: #8032F5;">U-Friend</span></a> 2022
+            </p>
+        </div>
+    </body>
+</html>

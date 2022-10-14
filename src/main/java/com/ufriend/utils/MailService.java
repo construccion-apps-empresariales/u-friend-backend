@@ -45,7 +45,6 @@ public class MailService {
             helper.setSubject(template.getSubject());
             String content = template.getContent().
                 replace("TOKEN", token);
-            log.info(content);
             helper.setText(content, true);
         };
         
