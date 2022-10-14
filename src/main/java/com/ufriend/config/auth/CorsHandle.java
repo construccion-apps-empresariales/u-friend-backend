@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.config.annotation.CorsRegistration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Service
 public class CorsHandle {
@@ -14,6 +14,7 @@ public class CorsHandle {
     @Value("${u-friend.cors.allowed}")
     private String allowed;
 
+    @SuppressWarnings("deprecation")
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
