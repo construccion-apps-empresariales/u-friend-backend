@@ -24,6 +24,9 @@ public class MailService {
     @Value("${spring.mail.username}")
     private String from;
 
+    @Value("${server.host}")
+    private String host;
+
     public Boolean sendConfirmationEmail(String to, String token) {
         return send(EmailTemplate.CONFIRMATION, to, token);
     }
@@ -43,8 +46,10 @@ public class MailService {
             helper.setFrom(this.from);
             helper.setTo(to);
             helper.setSubject(template.getSubject());
-            String content = template.getContent().
-                replace("TOKEN", token);
+            String content = template.getContent()
+                .replace("TOKEN", token)
+                .replace("HOST", host);
+            log.info(host);
             helper.setText(content, true);
         };
         
