@@ -26,28 +26,28 @@ public class AuthController {
     private TokenHandle tokenHandle;
 
     @PostMapping("/register")
-    public ResponseEntity<GenericOutDTO> register(@RequestBody RegisterInDTO registerInDTO){
+    public ResponseEntity<GenericOutDTO> register(@RequestBody RegisterInDTO body){
         GenericOutDTO genericOutDTO = new GenericOutDTO();
-        if (!registerInDTO.getPassword().equals(registerInDTO.getConfirmPassword())){
+        if (!body.getPassword().equals(body.getConfirmPassword())){
             genericOutDTO.setErrorMessage("Password and Confirm Password does not match");
             return ResponseEntity.badRequest().body(genericOutDTO);
         }
-        UserEntity user = userDao.findByEmail(registerInDTO.getEmail());
+        UserEntity user = userDao.findByEmail(body.getEmail());
         if (user != null){
             genericOutDTO.setErrorMessage("Email already taken");
             return ResponseEntity.badRequest().body(genericOutDTO);
         }
         user = new UserEntity();
-        user.setEmail(registerInDTO.getEmail());
-        user.setPassword(registerInDTO.getPassword());
+        user.setEmail(body.getEmail());
+        user.setPassword(body.getPassword());
         userService.save(user);
         genericOutDTO.setSuccessMessage("User registered!");
         return ResponseEntity.ok(genericOutDTO);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO){
-        UserEntity user = userDao.findByEmail(loginDTO.getEmail());
+    public ResponseEntity<?> login(@RequestBody LoginDTO body){
+        UserEntity user = userDao.findByEmail(body.getEmail());
         if (user == null){
             return ResponseEntity.badRequest().body("Invalid Email or Password.");
         }

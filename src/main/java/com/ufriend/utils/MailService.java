@@ -1,17 +1,21 @@
 package com.ufriend.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.stereotype.Service;
+
+import com.ufriend.enums.EmailTemplate;
+
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 @Data
+@Slf4j
 public class MailService {
 
     @Autowired
@@ -20,25 +24,31 @@ public class MailService {
     @Value("${spring.mail.username}")
     private String from;
 
-    public Boolean send(String to, String subject, String body) {
+    @Value("${server.host}")
+    private String host;
 
-        Boolean sended;
-
+    public Boolean send(String to, String token, EmailTemplate template) {
+        MimeMessagePreparator message = mimeMessage -> {
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+            helper.setFrom(this.from);
+            helper.setTo(to);
+            helper.setSubject(template.getSubject());
+            String content = template.getContent()
+                .replace("TOKEN", token)
+                .replace("HOST", host);
+            log.info(host);
+            helper.setText(content, true);
+        };
+        
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(from);
-            message.setTo(to);
-            message.setText(body);
-            message.setSubject(subject);
-    
-            mailSender.send(message);
-            sended = true;
-        } 
-        catch(Exception e){
-            log.error("Error enviando correo: " + e);
-            sended = false;
+            this.mailSender.send(message);
+            log.info(String.format("Email sended to %s with the '%s' template", to, template.getSubject()));
+            return true;
         }
-
-        return sended;
+        catch (Exception e) {
+            log.error(String.format("Error sending email to %s.\nError:%s", to, e.toString()), e);
+            return false;
+        }        
     }
+
 }
