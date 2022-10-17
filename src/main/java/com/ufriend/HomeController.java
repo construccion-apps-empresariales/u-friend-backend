@@ -21,8 +21,8 @@ public class HomeController {
     MailService mailService;
 
     @EventListener(ApplicationReadyEvent.class)
-    public void test() {
-        mailService.send("alejito23001@gmail.com", "TOKEN", EmailTemplate.ACCOUNT_DELETED);
+    public void sendEmailTest() {
+        mailService.send("alejito23001@gmail.com", "TOKEN", EmailTemplate.RESTORE_PASSWORD);
     }
 
 }
