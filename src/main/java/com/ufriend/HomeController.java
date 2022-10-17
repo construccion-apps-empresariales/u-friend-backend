@@ -6,6 +6,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufriend.enums.EmailTemplate;
 import com.ufriend.utils.MailService;
 
 @RestController
@@ -20,9 +21,8 @@ public class HomeController {
     MailService mailService;
 
     @EventListener(ApplicationReadyEvent.class)
-    public String test() {
-        Boolean response = mailService.sendConfirmationEmail("alejito23001@gmail.com", "Works");
-        return response ? "ok" : "fail";
+    public void test() {
+        mailService.send("alejito23001@gmail.com", "TOKEN", EmailTemplate.ACCOUNT_DELETED);
     }
 
 }

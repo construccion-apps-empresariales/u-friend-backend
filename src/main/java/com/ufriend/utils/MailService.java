@@ -27,20 +27,7 @@ public class MailService {
     @Value("${server.host}")
     private String host;
 
-    public Boolean sendConfirmationEmail(String to, String token) {
-        return send(EmailTemplate.CONFIRMATION, to, token);
-    }
-    
-    public Boolean sendRestorePasswordEmail(String to, String token) {
-        return send(EmailTemplate.RESTORE_PASSWORD, to, token);
-    }
-
-    public Boolean sendAccountDeletedEmail(String to) {
-        String token = "";
-        return send(EmailTemplate.ACCOUNT_DELETED, to, token);
-    }
-
-    private Boolean send(EmailTemplate template, String to, String token) {
+    public Boolean send(String to, String token, EmailTemplate template) {
         MimeMessagePreparator message = mimeMessage -> {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
             helper.setFrom(this.from);
@@ -55,7 +42,7 @@ public class MailService {
         
         try {
             this.mailSender.send(message);
-            log.info(String.format("Email sended to %s with template %s", to, template.getSubject()));
+            log.info(String.format("Email sended to %s with the '%s' template", to, template.getSubject()));
             return true;
         }
         catch (Exception e) {
