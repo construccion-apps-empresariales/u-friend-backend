@@ -22,7 +22,7 @@ public class HomeController {
 
     @EventListener(ApplicationReadyEvent.class)
     public void sendEmailTest() {
-        mailService.send("alejito23001@gmail.com", "TOKEN", EmailTemplate.RESTORE_PASSWORD);
+        // mailService.send("alejito23001@gmail.com", "TOKEN", EmailTemplate.RESTORE_PASSWORD);
     }
 
 }
