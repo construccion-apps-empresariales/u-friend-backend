@@ -6,7 +6,6 @@ import com.ufriend.dto.LoginDTO;
 import com.ufriend.dto.RegisterInDTO;
 import com.ufriend.dto.TokenDTO;
 import com.ufriend.role.RoleEntity;
-import com.ufriend.user.UserDao;
 import com.ufriend.user.UserEntity;
 import com.ufriend.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthController {
-
-    @Autowired
-    private UserDao userDao;
 
     @Autowired
     private UserService userService;
@@ -35,7 +31,7 @@ public class AuthController {
                 .body(new ResponseDTO(false, "Password and Confirm Password does not match", null));
         }
 
-        if (userDao.findByEmail(body.getEmail()) != null){
+        if (userService.findByEmail(body.getEmail()) != null){
             return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(new ResponseDTO(false, "Email already taken", null));
@@ -53,7 +49,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> login(@RequestBody LoginDTO body){
-        UserEntity user = userDao.findByEmail(body.getEmail());
+        UserEntity user = userService.findByEmail(body.getEmail());
         if (user == null){
             return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)

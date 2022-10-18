@@ -37,6 +37,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public UserEntity findByEmail(String email){
+        return userDao.findByEmail(email);
+    }
+
+    @Override
     public void save(UserEntity user) {
         if (user.getRole() == null)
             user.setRole(roleDao.findByName("USER"));
