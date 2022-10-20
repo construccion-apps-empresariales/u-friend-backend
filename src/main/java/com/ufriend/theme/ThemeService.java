@@ -2,7 +2,6 @@ package com.ufriend.theme;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +11,24 @@ public class ThemeService implements IThemeService {
 
     @Autowired
     private ThemeDao themeDao;
+    
+    @Override
+public List<ThemeEntity> list() {
+        return (ArrayList<ThemeEntity>) themeDao.findAllExcludeDeleteds();
+    }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<ThemeEntity> list() {
+    public List<ThemeEntity> listIncludeDeleteds() {
         return (ArrayList<ThemeEntity>) themeDao.findAll();
     }
 
     @Override
     public ThemeEntity findById(String themeId) {
+        return themeDao.findByIdExcludeDeleteds(themeId).orElse(null);
+    }
+
+    @Override
+    public ThemeEntity findByIdIncludeDeleteds(String themeId) {
         return themeDao.findById(themeId).orElse(null);
     }
 
