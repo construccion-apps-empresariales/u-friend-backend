@@ -25,12 +25,12 @@ public class ThemeService implements IThemeService {
     }
 
     @Override
-    public void save(ThemeEntity language) {
-        themeDao.save(language);
+    public void save(ThemeEntity theme) {
+        themeDao.save(theme);
     }
 
     @Override
-    public void delete(ThemeEntity language) {
-        themeDao.delete(language);
+    public void delete(ThemeEntity theme) {
+        themeDao.delete(theme);
     }
 }

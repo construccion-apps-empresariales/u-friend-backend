@@ -1,4 +1,4 @@
-package com.ufriend.dto;
+package com.ufriend.dto.http;
 
 import lombok.Data;
 

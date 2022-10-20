@@ -1,10 +1,10 @@
 package com.ufriend.controllers;
 
 import com.ufriend.config.auth.TokenHandle;
-import com.ufriend.dto.ResponseDTO;
-import com.ufriend.dto.LoginDTO;
-import com.ufriend.dto.RegisterInDTO;
-import com.ufriend.dto.TokenDTO;
+import com.ufriend.dto.auth.LoginDTO;
+import com.ufriend.dto.auth.RegisterInDTO;
+import com.ufriend.dto.http.ResponseDTO;
+import com.ufriend.dto.http.TokenDTO;
 import com.ufriend.role.RoleEntity;
 import com.ufriend.user.UserEntity;
 import com.ufriend.user.UserService;
