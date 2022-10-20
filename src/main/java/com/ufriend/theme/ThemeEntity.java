@@ -27,6 +27,21 @@ public class ThemeEntity implements Serializable {
     @NotNull
     private String name;
 
+    @Column(name = "primary_color")
+    private String primary_color;
+
+    @Column(name = "secondary_color")
+    private String secondary_color;
+
+    @Column(name = "warning_color")
+    private String warning_color;
+
+    @Column(name = "danger_color")
+    private String danger_color;
+
+    @Column(name = "success_color")
+    private String success_color;
+
     @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
 
