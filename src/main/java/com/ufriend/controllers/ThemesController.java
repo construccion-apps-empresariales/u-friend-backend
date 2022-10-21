@@ -65,7 +65,7 @@ public class ThemesController extends ExceptionHandlerController {
         if (theme != null) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(new ResponseDTO(false, "Theme alredy exist's", theme));
+                    .body(new ResponseDTO(false, "Theme alredy exists", theme));
         }
         return ResponseEntity
                 .status(HttpStatus.CREATED)
