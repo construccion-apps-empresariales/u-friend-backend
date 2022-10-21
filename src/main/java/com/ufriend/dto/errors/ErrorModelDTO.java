@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ErrorModelDTO{
     private String field;
-    private Object value;
     private String message;
 }

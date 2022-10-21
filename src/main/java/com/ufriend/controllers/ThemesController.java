@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class ThemesController extends ExceptionHandlerController {
 
     private final String PATH = "/themes";
-    private final String PATH_WITH_VARIABLE = "/themes/{id}";
+    private final String PATH_WITH_ID_VARIABLE = "/themes/{id}";
 
     @Autowired
     ThemeService themeService;
+
+    // TODO Set all methos protected by jwt
 
     // Get all themes
     @GetMapping(PATH)
@@ -38,7 +40,7 @@ public class ThemesController extends ExceptionHandlerController {
     }
 
     // Get one theme
-    @GetMapping(PATH_WITH_VARIABLE)
+    @GetMapping(PATH_WITH_ID_VARIABLE)
     public ResponseEntity<ResponseDTO> getOne(@PathVariable() String id) {
         ThemeEntity theme = themeService.findById(id);
         if (theme == null) {
@@ -55,7 +57,7 @@ public class ThemesController extends ExceptionHandlerController {
                 .body(new ResponseDTO(true, null, theme));
     }
 
-    // TODO SetProtected
+    // TODO SetAuthorized 
     // Cretae a theme
     @PostMapping(PATH)
     public ResponseEntity<ResponseDTO> create(@Valid @RequestBody ThemeEntity body) {
@@ -70,11 +72,11 @@ public class ThemesController extends ExceptionHandlerController {
                 .body(new ResponseDTO(true, "Theme created", this.themeService.save(body)));
     }
 
-    // TODO SetProtected
+    // TODO SetAuthorized 
     // Update a theme
     @PutMapping(PATH)
     public ResponseEntity<ResponseDTO> update(@Valid @RequestBody ThemeEntity body) {
-        ThemeEntity theme = themeService.findByIdIncludeDeleteds(body.getId());
+        ThemeEntity theme = themeService.findById(body.getId());
         if (theme == null) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
@@ -84,17 +86,18 @@ public class ThemesController extends ExceptionHandlerController {
                             null));
         }
 
-        body.setDeletedAt(null);
         body.setUpdatedAt(LocalDateTime.now());
+        this.themeService.save(body);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDTO(
                         true,
                         "Theme updated",
-                        this.themeService.save(body)));
+                        null));
     }
 
-    @DeleteMapping(PATH_WITH_VARIABLE)
+    // TODO SetAuthorized
+    @DeleteMapping(PATH_WITH_ID_VARIABLE)
     public ResponseEntity<ResponseDTO> delete(@PathVariable() String id) {
         ThemeEntity theme = themeService.findById(id);
         if (theme == null) {
@@ -107,12 +110,10 @@ public class ThemesController extends ExceptionHandlerController {
         }
 
         theme.setDeletedAt(LocalDateTime.now());
+        themeService.save(theme);
         return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new ResponseDTO(
-                        true,
-                        "Theme deleted",
-                        this.themeService.save(theme)));
+                .status(HttpStatus.NO_CONTENT)
+                .build();
     }
 
     private String notFound(String id) {

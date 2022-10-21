@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorResponseDTO {
-    private List<ErrorModelDTO> errorMessage;
+    private List<ErrorModelDTO> errors;
 
 }

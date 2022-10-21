@@ -26,7 +26,7 @@ public class ExceptionHandlerController {
             MethodArgumentNotValidException ex) {
 
         List<ErrorModelDTO> errorMessages = ex.getBindingResult().getFieldErrors().stream()
-                .map(err -> new ErrorModelDTO(err.getField(), err.getRejectedValue(), err.getDefaultMessage()))
+                .map(err -> new ErrorModelDTO(err.getField(), err.getDefaultMessage()))
                 .distinct()
                 .collect(Collectors.toList());
 
@@ -35,7 +35,7 @@ public class ExceptionHandlerController {
                 .body(new ResponseDTO(
                         false,
                         "Send a valid body",
-                        ErrorResponseDTO.builder().errorMessage(errorMessages).build()));
+                        ErrorResponseDTO.builder().errors(errorMessages).build()));
     }
 
     // No body sent

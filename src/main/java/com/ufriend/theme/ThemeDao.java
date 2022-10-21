@@ -7,10 +7,12 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ThemeDao extends CrudRepository<ThemeEntity, String> {
 
+    @Override
     @Query("SELECT t FROM ThemeEntity t WHERE t.deletedAt IS NULL AND t.id = :id")
-    public Optional<ThemeEntity> findByIdExcludeDeleteds(String id);
+    public Optional<ThemeEntity> findById(String id);
 
+    @Override
     @Query("SELECT t FROM ThemeEntity t WHERE t.deletedAt IS NULL")
-    public Iterable<ThemeEntity> findAllExcludeDeleteds();
+    public Iterable<ThemeEntity> findAll();
 
 }

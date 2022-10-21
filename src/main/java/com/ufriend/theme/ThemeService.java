@@ -14,21 +14,11 @@ public class ThemeService implements IThemeService {
     
     @Override
 public List<ThemeEntity> list() {
-        return (ArrayList<ThemeEntity>) themeDao.findAllExcludeDeleteds();
-    }
-
-    @Override
-    public List<ThemeEntity> listIncludeDeleteds() {
         return (ArrayList<ThemeEntity>) themeDao.findAll();
     }
 
     @Override
     public ThemeEntity findById(String themeId) {
-        return themeDao.findByIdExcludeDeleteds(themeId).orElse(null);
-    }
-
-    @Override
-    public ThemeEntity findByIdIncludeDeleteds(String themeId) {
         return themeDao.findById(themeId).orElse(null);
     }
 
