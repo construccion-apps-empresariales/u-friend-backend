@@ -45,17 +45,17 @@ public class UFriendApplication {
 		RoleEntity adminRole = roleService.findById("01");
 		if (adminRole == null){
 			adminRole = new RoleEntity();
-			adminRole.setId("01");
-			adminRole.setName("ADMIN");
 		}
+		adminRole.setId("01");
+		adminRole.setName("ADMIN");
 		roleService.save(adminRole);
 
 		RoleEntity userRole = roleService.findById("02");
 		if (userRole == null){
 			userRole = new RoleEntity();
-			userRole.setId("02");
-			userRole.setName("USER");
 		}
+		userRole.setId("02");
+		userRole.setName("USER");
 		roleService.save(userRole);
 	}
 
@@ -63,17 +63,28 @@ public class UFriendApplication {
 		ThemeEntity lightTheme = themeService.findById("01");
 		if (lightTheme == null){
 			lightTheme = new ThemeEntity();
-			lightTheme.setId("01");
-			lightTheme.setName("LIGHT");
 		}
+		lightTheme.setId("01");
+		lightTheme.setName("LIGHT");
+		lightTheme.setPrimary_color("#8032F5");
+		lightTheme.setSecondary_color("#00A995");
+		lightTheme.setSuccess_color("#04CBBD");
+		lightTheme.setWarning_color("#FABE36");
+		lightTheme.setDanger_color("#FF7878");
 		themeService.save(lightTheme);
 
 		ThemeEntity darkTheme = themeService.findById("02");
 		if (darkTheme == null){
 			darkTheme = new ThemeEntity();
-			darkTheme.setId("02");
-			darkTheme.setName("DARK");
 		}
+		darkTheme.setId("02");
+		darkTheme.setName("DARK");
+		//TODO: Set darkTheme colors
+		darkTheme.setPrimary_color("#8032F5");
+		darkTheme.setSecondary_color("#00A995");
+		darkTheme.setSuccess_color("#04CBBD");
+		darkTheme.setWarning_color("#FABE36");
+		darkTheme.setDanger_color("#FF7878");
 		themeService.save(darkTheme);
 	}
 
@@ -81,9 +92,9 @@ public class UFriendApplication {
 		LanguageEntity language = languageService.findById("EN");
 		if (language == null){
 			language = new LanguageEntity();
-			language.setId("EN");
-			language.setName("ENGLISH");
 		}
+		language.setId("EN");
+		language.setName("ENGLISH");
 		languageService.save(language);
 	}
 
