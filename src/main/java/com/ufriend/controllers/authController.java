@@ -1,23 +1,20 @@
 package com.ufriend.controllers;
 
 import com.ufriend.config.auth.TokenHandle;
-import com.ufriend.dto.GenericOutDTO;
-import com.ufriend.dto.LoginDTO;
-import com.ufriend.dto.RegisterInDTO;
-import com.ufriend.dto.TokenDTO;
+import com.ufriend.dto.auth.LoginDTO;
+import com.ufriend.dto.auth.RegisterInDTO;
+import com.ufriend.dto.http.ResponseDTO;
+import com.ufriend.dto.http.TokenDTO;
 import com.ufriend.role.RoleEntity;
-import com.ufriend.user.UserDao;
 import com.ufriend.user.UserEntity;
 import com.ufriend.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthController {
-
-    @Autowired
-    private UserDao userDao;
 
     @Autowired
     private UserService userService;
@@ -26,41 +23,53 @@ public class AuthController {
     private TokenHandle tokenHandle;
 
     @PostMapping("/register")
-    public ResponseEntity<GenericOutDTO> register(@RequestBody RegisterInDTO body){
-        GenericOutDTO genericOutDTO = new GenericOutDTO();
+    public ResponseEntity<ResponseDTO> register(@RequestBody RegisterInDTO body){
+        
         if (!body.getPassword().equals(body.getConfirmPassword())){
-            genericOutDTO.setErrorMessage("Password and Confirm Password does not match");
-            return ResponseEntity.badRequest().body(genericOutDTO);
+            return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ResponseDTO(false, "Password and Confirm Password does not match", null));
         }
-        UserEntity user = userDao.findByEmail(body.getEmail());
-        if (user != null){
-            genericOutDTO.setErrorMessage("Email already taken");
-            return ResponseEntity.badRequest().body(genericOutDTO);
+
+        if (userService.findByEmail(body.getEmail()) != null){
+            return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(new ResponseDTO(false, "Email already taken", null));
         }
-        user = new UserEntity();
+        
+        UserEntity user = new UserEntity();
         user.setEmail(body.getEmail());
         user.setPassword(body.getPassword());
         userService.save(user);
-        genericOutDTO.setSuccessMessage("User registered!");
-        return ResponseEntity.ok(genericOutDTO);
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(new ResponseDTO(true, "User registered", user)
+        );
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDTO body){
-        UserEntity user = userDao.findByEmail(body.getEmail());
+    public ResponseEntity<ResponseDTO> login(@RequestBody LoginDTO body){
+        UserEntity user = userService.findByEmail(body.getEmail());
         if (user == null){
-            return ResponseEntity.badRequest().body("Invalid Email or Password.");
+            return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ResponseDTO(false, "Invalid Email or Password.", null)
+            );
         }
         RoleEntity role = user.getRole();
-        TokenDTO tokenDTO = new TokenDTO();
-        tokenDTO.setAccessToken(tokenHandle.getAccessToken(user.getName(), role.getName()));
-        tokenDTO.setRefreshToken(tokenHandle.getRefreshToken(user.getName(), role.getName()));
-        return ResponseEntity.ok(tokenDTO);
+        TokenDTO token = new TokenDTO();
+        token.setAccessToken(tokenHandle.getAccessToken(user.getName(), role.getName()));
+        token.setRefreshToken(tokenHandle.getRefreshToken(user.getName(), role.getName()));
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(new ResponseDTO(true, "Login success", token));
     }
 
     @GetMapping("/logout")
     public ResponseEntity<?> logout(){
-        return ResponseEntity.ok("Session closed");
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(new ResponseDTO(true, "Session closed", null));
     }
 
 }

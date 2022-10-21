@@ -1,4 +1,4 @@
-package com.ufriend.dto;
+package com.ufriend.dto.auth;
 
 import lombok.Data;
 
