@@ -8,12 +8,14 @@ import com.ufriend.theme.ThemeEntity;
 import com.ufriend.theme.ThemeService;
 import com.ufriend.user.UserEntity;
 import com.ufriend.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
 
+@Slf4j
 @SpringBootApplication
 public class UFriendApplication {
 
@@ -95,6 +97,14 @@ public class UFriendApplication {
 		}
 		language.setId("EN");
 		language.setName("ENGLISH");
+		languageService.save(language);
+
+		language = languageService.findById("ES");
+		if (language == null){
+			language = new LanguageEntity();
+		}
+		language.setId("ES");
+		language.setName("SPANISH");
 		languageService.save(language);
 	}
 

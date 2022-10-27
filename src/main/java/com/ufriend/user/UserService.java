@@ -42,14 +42,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void save(UserEntity user) {
+    public UserEntity save(UserEntity user) {
         if (user.getRole() == null)
             user.setRole(roleDao.findByName("USER"));
         if (user.getTheme() == null)
             user.setTheme(themeService.findById("01"));
         if (user.getLanguage() == null)
             user.setLanguage(languageService.findById("EN"));
-        userDao.save(user);
+        return userDao.save(user);
     }
 
     @Override
