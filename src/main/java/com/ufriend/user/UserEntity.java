@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ufriend.language.LanguageEntity;
 import com.ufriend.role.RoleEntity;
 import com.ufriend.theme.ThemeEntity;
@@ -31,8 +32,12 @@ public class UserEntity {
     @Length(min = 1, max = 100)
     private String lastname;
 
+    @Lob
     @Column(name = "photo")
     private String photo;
+
+    @Column(name = "mime")
+    private String mime;
 
     @Column(name = "email", nullable = false, length = 150)
     @Length(min = 1, max = 150)
@@ -43,6 +48,7 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     @Length(min = 6, max = 255)
     @NotNull
+    @JsonIgnore
     private String password;
 
     @Column(name = "phone", length = 50)
@@ -73,9 +79,14 @@ public class UserEntity {
     @ManyToOne
     private ThemeEntity theme;
 
-    private String encodePassword(String password){
+    public String encodePassword(String password){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(password);
+    }
+
+    public boolean samePwd(String pwd){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(pwd, this.password);
     }
 
     public void setPassword(String password) {

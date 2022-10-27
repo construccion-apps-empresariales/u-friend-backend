@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface IUserService {
     public List<UserEntity> list();
-    public UserEntity findById(Long role);
+    public UserEntity findById(Long id);
     public UserEntity findByEmail(String email);
-    public void save(UserEntity role);
-    public void delete(UserEntity role);
+    public UserEntity save(UserEntity user);
+    public void delete(UserEntity user);
 }
