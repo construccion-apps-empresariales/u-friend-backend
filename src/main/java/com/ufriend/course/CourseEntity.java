@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import com.ufriend.teacher.TeacherEntity;
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -25,16 +26,13 @@ public class CourseEntity implements Serializable {
     @NotNull
     private String name;
 
-    @Column(name = "approve_note", nullable = false, columnDefinition = "REAL DEFAULT 3.0")
-    @NotNull
+    @Column(name = "approve_note", columnDefinition = "REAL DEFAULT 3.0")
     private float approveNote = 3;
 
-    @Column(name = "min_note", nullable = false, columnDefinition = "REAL DEFAULT 0.0")
-    @NotNull
+    @Column(name = "min_note", columnDefinition = "REAL DEFAULT 0.0")
     private float minNote = 0;
 
-    @Column(name = "max_note", nullable = false, columnDefinition = "REAL DEFAULT 5.0")
-    @NotNull
+    @Column(name = "max_note", columnDefinition = "REAL DEFAULT 5.0")
     private float maxNote = 5;
 
     @Column(name = "starts")
