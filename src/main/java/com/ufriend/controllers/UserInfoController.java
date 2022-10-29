@@ -32,6 +32,19 @@ public class UserInfoController extends ExceptionHandlerController {
     @Resource
     private ThemeService themeService;
 
+    @GetMapping("/info")
+    public ResponseEntity<ResponseDTO> getInfo(@RequestParam String email) {
+        UserEntity dbUser = this.userService.findByEmail(email);
+        if (dbUser == null){
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO(false, "User not found", null));
+        }
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDTO(true, "User information", dbUser));
+    }
+
     @PutMapping("/update_info")
     public ResponseEntity<ResponseDTO> updateInfo(@RequestBody UserEntity body){
         UserEntity user = this.userService.findById(body.getId());
@@ -53,8 +66,19 @@ public class UserInfoController extends ExceptionHandlerController {
                 user.setEmail(body.getEmail());
         }
         if (body.getPhone() != null){
-            if (!body.getPhone().equals(""))
+            if (!body.getPhone().equals("")) {
                 user.setPhone(body.getPhone());
+            }
+        }
+        if (body.getTheme() != null){
+            if (!body.getTheme().getId().equals("")) {
+                user.setTheme(this.themeService.findById(body.getTheme().getId()));
+            }
+        }
+        if (body.getLanguage() != null){
+            if (!body.getLanguage().getId().equals("")) {
+                user.setLanguage(this.languageService.findById(body.getLanguage().getId()));
+            }
         }
         user.setUpdatedAt(LocalDateTime.now());
         return ResponseEntity
