@@ -1,5 +1,7 @@
 package com.ufriend;
 
+import com.ufriend.course.CourseEntity;
+import com.ufriend.course.CourseService;
 import com.ufriend.language.LanguageEntity;
 import com.ufriend.language.LanguageService;
 import com.ufriend.role.RoleEntity;
@@ -11,7 +13,6 @@ import com.ufriend.theme.ThemeService;
 import com.ufriend.user.UserEntity;
 import com.ufriend.user.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -37,6 +38,9 @@ public class UFriendApplication {
 	@Resource
 	private TeacherService teacherService;
 
+	@Resource
+	private CourseService courseService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(UFriendApplication.class, args);
 	}
@@ -49,6 +53,7 @@ public class UFriendApplication {
 		createThemes();
 		createUsers();
 		createTeachers();
+		createCourses();
 	}
 
 	private void createRoles(){
@@ -83,7 +88,7 @@ public class UFriendApplication {
 		log.info("Themes data { LightTheme } from database: " + lightTheme);
 		if (lightTheme == null){
 			lightTheme = new ThemeEntity();
-			log.info("Themes data { LightTheme } does not exists, creating a new one.");
+			log.info("Themes data { LightTheme } does not exist, creating a new one.");
 		}
 		lightTheme.setId("01");
 		lightTheme.setName("LIGHT");
@@ -99,7 +104,7 @@ public class UFriendApplication {
 		log.info("Themes data { DarkTheme } from database: " + lightTheme);
 		if (darkTheme == null){
 			darkTheme = new ThemeEntity();
-			log.info("Themes data { DarkTheme } does not exists, creating a new one.");
+			log.info("Themes data { DarkTheme } does not exist, creating a new one.");
 		}
 		darkTheme.setId("02");
 		darkTheme.setName("DARK");
@@ -137,7 +142,7 @@ public class UFriendApplication {
 		log.info("Users data { AdminUser } from database: " + adminUser);
 		if (adminUser == null){
 			adminUser = new UserEntity();
-			log.info("Users data { AdminUser } does not exists, creating a new one.");
+			log.info("Users data { AdminUser } does not exist, creating a new one.");
 		}
 		adminUser.setId(1L);
 		adminUser.setEmail("admin@ufriend.com");
@@ -155,7 +160,7 @@ public class UFriendApplication {
 		log.info("Users data { TestUser } from database: " + testUser);
 		if (testUser == null){
 			testUser = new UserEntity();
-			log.info("Users data { TestUser } does not exists, creating a new one.");
+			log.info("Users data { TestUser } does not exist, creating a new one.");
 		}
 		testUser.setId(2L);
 		testUser.setEmail("user@ufriend.com");
@@ -175,7 +180,7 @@ public class UFriendApplication {
 		log.info("Teachers data { TestTeacher } from database: " + teacher);
 		if (teacher == null) {
 			teacher = new TeacherEntity();
-			log.info("Teachers data { TestTeacher } does not exists, creating a new one.");
+			log.info("Teachers data { TestTeacher } does not exist, creating a new one.");
 		}
 		teacher.setId(1L);
 		teacher.setName("test");
@@ -183,5 +188,19 @@ public class UFriendApplication {
 		teacher.setEmail("teacher@ufriend.com");
 		log.info("Teachers data { TestTeacher } created with data: " + teacher);
 		teacherService.save(teacher);
+	}
+
+	private void createCourses(){
+		log.info("Courses data");
+		CourseEntity course = courseService.findById(1L);
+		log.info("Courses data { TestCourse } from database: " + course);
+		if (course == null) {
+			course = new CourseEntity();
+			log.info("Courses data { TestCourse } does not exist, creating a new one.");
+		}
+		course.setId(1L);
+		course.setName("test course");
+		log.info("Courses data { TestCourse } created with data: " + course);
+		courseService.save(course);
 	}
 }
