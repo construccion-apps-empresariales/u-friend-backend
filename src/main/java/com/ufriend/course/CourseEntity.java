@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.ufriend.teacher.TeacherEntity;
+import com.ufriend.user.UserEntity;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
@@ -52,4 +53,7 @@ public class CourseEntity implements Serializable {
 
     @ManyToOne
     private TeacherEntity teacher;
+
+    @ManyToOne
+    private UserEntity user;
 }
