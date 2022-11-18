@@ -200,6 +200,8 @@ public class UFriendApplication {
 		}
 		course.setId(1L);
 		course.setName("test course");
+		UserEntity user = userService.findById(1L);
+		course.setUser(user);
 		log.info("Courses data { TestCourse } created with data: " + course);
 		courseService.save(course);
 	}
