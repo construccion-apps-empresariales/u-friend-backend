@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.ufriend.course.CourseEntity;
-import com.ufriend.user.UserEntity;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -47,10 +46,6 @@ public class NoteEntity implements Serializable {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-
-    @NotNull
-    @ManyToOne
-    private UserEntity user;
 
     @NotNull
     @ManyToOne
