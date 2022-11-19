@@ -8,4 +8,5 @@ public interface ICourseService {
     public CourseEntity findById(Long courseId);
     public CourseEntity save(CourseEntity course);
     public void delete(CourseEntity course);
+    public List<CourseEntity> getUserCourses(Long userId);
 }

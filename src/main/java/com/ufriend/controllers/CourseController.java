@@ -1,10 +1,8 @@
 package com.ufriend.controllers;
 
+import com.ufriend.course.CourseEntity;
 import com.ufriend.course.CourseService;
 import com.ufriend.dto.http.ResponseDTO;
-import com.ufriend.language.LanguageService;
-import com.ufriend.course.CourseEntity;
-import com.ufriend.teacher.TeacherEntity;
 import com.ufriend.teacher.TeacherService;
 import com.ufriend.theme.ThemeService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +14,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @RestController()
@@ -28,9 +25,6 @@ public class CourseController extends ExceptionHandlerController {
 
     @Resource
     private TeacherService teacherService;
-
-    @Resource
-    private ThemeService themeService;
 
     @GetMapping
     public ResponseEntity<ResponseDTO> index(){
