@@ -1,5 +1,7 @@
 package com.ufriend.controllers;
 
+import com.ufriend.course.CourseEntity;
+import com.ufriend.course.CourseService;
 import com.ufriend.dto.auth.UpdatePasswordDTO;
 import com.ufriend.dto.http.ResponseDTO;
 
@@ -17,6 +19,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.List;
 
 @Slf4j
 @RestController()
@@ -31,6 +34,9 @@ public class UserInfoController extends ExceptionHandlerController {
 
     @Resource
     private ThemeService themeService;
+
+    @Resource
+    private CourseService courseService;
 
     @GetMapping("/info")
     public ResponseEntity<ResponseDTO> getInfo(@RequestParam String email) {
@@ -153,5 +159,19 @@ public class UserInfoController extends ExceptionHandlerController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDTO(true, "Photo updated successfully", this.userService.save(dbUser)));
+    }
+
+    @GetMapping("/courses")
+    public ResponseEntity<ResponseDTO> getUserCourses(@RequestParam String email) {
+        UserEntity dbUser = this.userService.findByEmail(email);
+        if (dbUser == null) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO(false, "User not found", null));
+        }
+        List<CourseEntity> userCourses = this.courseService.getUserCourses(dbUser.getId());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDTO(true, "User courses", userCourses));
     }
 }

@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ufriend.teacher.TeacherEntity;
 import com.ufriend.user.UserEntity;
 import lombok.Data;
@@ -55,5 +56,6 @@ public class CourseEntity implements Serializable {
     private TeacherEntity teacher;
 
     @ManyToOne
+    @JsonIgnore
     private UserEntity user;
 }
