@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ufriend.course.CourseEntity;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -33,10 +35,12 @@ public class NoteEntity implements Serializable {
     private float value;
 
     @Column(name = "starts")
-    private LocalDateTime starts;
+    @Length(min = 9, max = 10)
+    private String starts;
 
     @Column(name = "ends")
-    private LocalDateTime ends;
+    @Length(min = 9, max = 10)
+    private String ends;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -47,8 +51,10 @@ public class NoteEntity implements Serializable {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @JsonBackReference
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "course_id", nullable = false)
     private CourseEntity course;
 
     @ManyToOne

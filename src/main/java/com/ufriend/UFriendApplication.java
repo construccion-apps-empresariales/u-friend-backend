@@ -52,8 +52,8 @@ public class UFriendApplication {
 		createRoles();
 		createThemes();
 		createUsers();
-		createTeachers();
-		createCourses();
+		//createTeachers();
+		//createCourses();
 	}
 
 	private void createRoles(){
