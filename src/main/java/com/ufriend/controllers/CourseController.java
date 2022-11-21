@@ -5,6 +5,8 @@ import com.ufriend.course.CourseService;
 import com.ufriend.dto.http.ResponseDTO;
 import com.ufriend.teacher.TeacherService;
 import com.ufriend.theme.ThemeService;
+import com.ufriend.user.UserEntity;
+import com.ufriend.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,9 @@ public class CourseController extends ExceptionHandlerController {
 
     @Resource
     private CourseService courseService;
+
+    @Resource
+    private UserService userService;
 
     @Resource
     private TeacherService teacherService;
@@ -42,14 +47,20 @@ public class CourseController extends ExceptionHandlerController {
                     .status(HttpStatus.NOT_FOUND)
                     .body(new ResponseDTO(false, "Course not found", null));
         }
-
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDTO(true, null, course));
     }
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> create(@Valid @RequestBody CourseEntity body) {
+    public ResponseEntity<ResponseDTO> create(@RequestParam String email, @Valid @RequestBody CourseEntity body) {
+        UserEntity dbUser = this.userService.findByEmail(email);
+        if (dbUser == null) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO(false, "User not found", null));
+        }
+        body.setUser(dbUser);
         CourseEntity savedCourse = this.courseService.save(body);
         if (savedCourse.getTeacher() != null) {
             savedCourse.setTeacher(teacherService.findById(savedCourse.getTeacher().getId()));
@@ -72,18 +83,19 @@ public class CourseController extends ExceptionHandlerController {
             if (!body.getName().equals(""))
                 dbCourse.setName(body.getName());
 
-        if (body.getApproveNote() != 3)
-            dbCourse.setApproveNote(body.getApproveNote());
-
-        if (body.getMinNote() != 0)
-            dbCourse.setMinNote(body.getMinNote());
-
-        if (body.getMaxNote() != 5)
-            dbCourse.setMaxNote(body.getMaxNote());
+        dbCourse.setApproveNote(body.getApproveNote());
+        dbCourse.setMinNote(body.getMinNote());
+        dbCourse.setMaxNote(body.getMaxNote());
 
         if (body.getTeacher() != null)
             if (body.getTeacher().getId() != null)
                 dbCourse.setTeacher(this.teacherService.findById(body.getTeacher().getId()));
+
+        if (body.getStarts() != null)
+            dbCourse.setStarts(body.getStarts());
+
+        if (body.getEnds() != null)
+            dbCourse.setEnds(body.getEnds());
 
         dbCourse.setUpdatedAt(LocalDateTime.now());
 

@@ -33,15 +33,6 @@ public class CourseService implements ICourseService {
 
     @Override
     public List<CourseEntity> getUserCourses(Long userId){
-        List<CourseEntity> allCourses = this.list();
-        List<CourseEntity> userCourses = new ArrayList<>();
-        for (CourseEntity course: allCourses) {
-            if (course.getUser().getId() != null) {
-                if (Objects.equals(course.getUser().getId(), userId)) {
-                    userCourses.add(course);
-                }
-            }
-        }
-        return userCourses;
+        return courseDao.findAllCourseByUser(userId);
     }
 }

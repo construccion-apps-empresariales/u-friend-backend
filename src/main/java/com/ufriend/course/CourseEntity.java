@@ -2,15 +2,19 @@ package com.ufriend.course;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ufriend.teacher.TeacherEntity;
 import com.ufriend.user.UserEntity;
+import com.ufriend.note.NoteEntity;
 import lombok.Data;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -38,10 +42,12 @@ public class CourseEntity implements Serializable {
     private float maxNote = 5;
 
     @Column(name = "starts")
-    private LocalDateTime starts;
+    @Length(min = 9, max = 10)
+    private String starts;
 
     @Column(name = "ends")
-    private LocalDateTime ends;
+    @Length(min = 9, max = 10)
+    private String ends;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -58,4 +64,8 @@ public class CourseEntity implements Serializable {
     @ManyToOne
     @JsonIgnore
     private UserEntity user;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<NoteEntity> notes = new ArrayList<>();
 }

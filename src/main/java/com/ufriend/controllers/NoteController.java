@@ -65,28 +65,23 @@ public class NoteController extends ExceptionHandlerController {
                     .body(new ResponseDTO(false, "Note not found", null));
         }
 
-        if (body.getFather() != null)
-            if (body.getFather().getId() != null)
-                if (!body.getFather().getId().equals("")) {
-                    NoteEntity father = this.noteService.findById(body.getFather().getId());
-                    if (father == null)
-                        return ResponseEntity
-                                .status(HttpStatus.NOT_FOUND)
-                                .body(new ResponseDTO(false, "Father note not found", body.getFather().getId()));
-                    else {
-                        dbNote.setFather(father);
-                    }
-                }
+        if (body.getFather() != null) {
+            NoteEntity father = this.noteService.findById(body.getFather().getId());
+            if (father == null)
+                return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseDTO(false, "Father note not found", body.getFather().getId()));
+            else {
+                dbNote.setFather(father);
+            }
+        }
 
         if (body.getName() != null)
             if (!body.getName().equals(""))
                 dbNote.setName(body.getName());
 
-        if (body.getPercentage() != 0.0f)
-            dbNote.setPercentage(body.getPercentage());
-
-        if (body.getValue() != 0.0f)
-            dbNote.setValue(body.getValue());
+        dbNote.setPercentage(body.getPercentage());
+        dbNote.setValue(body.getValue());
 
         if (body.getStarts() != null)
             dbNote.setStarts(body.getStarts());
