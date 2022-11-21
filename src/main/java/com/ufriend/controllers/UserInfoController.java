@@ -148,7 +148,8 @@ public class UserInfoController extends ExceptionHandlerController {
                     .body(new ResponseDTO(false, "File is too large, please reduce it's size or select a different one, max file size is 5MB!", null));
         }
         try {
-            dbUser.setPhoto("data:" + image.getContentType() + ";base64," + Base64.getEncoder().encodeToString(image.getBytes()));
+            dbUser.setPhoto(Base64.getEncoder().encodeToString(image.getBytes()));
+            dbUser.setMime(image.getContentType());
         } catch (IOException e) {
             dbUser.setPhoto(null);
             log.error(e.getMessage());

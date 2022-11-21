@@ -3,26 +3,26 @@ package com.ufriend.user;
 import com.ufriend.language.LanguageService;
 import com.ufriend.role.RoleDao;
 import com.ufriend.theme.ThemeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService implements IUserService {
 
-    @Autowired
+    @Resource
     private UserDao userDao;
 
-    @Autowired
+    @Resource
     private RoleDao roleDao;
 
-    @Autowired
+    @Resource
     private ThemeService themeService;
 
-    @Autowired
+    @Resource
     private LanguageService languageService;
 
     @Override
