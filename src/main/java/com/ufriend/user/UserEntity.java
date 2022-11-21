@@ -11,6 +11,7 @@ import com.ufriend.language.LanguageEntity;
 import com.ufriend.role.RoleEntity;
 import com.ufriend.theme.ThemeEntity;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -32,8 +33,7 @@ public class UserEntity {
     @Length(min = 1, max = 100)
     private String lastname;
 
-    @Lob
-    @Column(name = "photo")
+    @Column(name = "photo", columnDefinition = "TEXT")
     private String photo;
 
     @Column(name = "mime")
